@@ -44,7 +44,7 @@ const AddBook = () => {
       <div className="flex flex-col w-full">
         <h1 className="text-4xl font-bold uppercase tracking-wide">Add book</h1>
 
-        <div className="divider"></div>
+        <div className="divider" />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex lg:gap-4 flex-col lg:flex-row">

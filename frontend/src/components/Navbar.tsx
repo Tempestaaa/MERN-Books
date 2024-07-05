@@ -48,7 +48,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`max-w-screen-2xl container mx-auto md:px-20  bg-base-100 px-4 ${
+      className={`max-w-screen-2xl container mx-auto md:px-20  bg-base-100 px-4 z-[100] ${
         isSticky
           ? "bg-base-200 transition-all duration-300 ease-in-out shadow-md"
           : ""
