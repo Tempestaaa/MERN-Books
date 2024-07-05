@@ -31,7 +31,7 @@ const BookDetails = ({ book }: Props) => {
       <h2 className="text-2xl">{book?.originalTitle}</h2>
 
       {/* TITLE */}
-      <h1 className="text-4xl font-bold line-clamp-2">{book?.title}</h1>
+      <h1 className="text-4xl font-bold line-clamp-3">{book?.title}</h1>
 
       {/* AUTHOR */}
       <h3 className="text-xl">{book?.author}</h3>
@@ -43,7 +43,7 @@ const BookDetails = ({ book }: Props) => {
       </div>
 
       {/* DESCRIPTION */}
-      <p className="line-clamp-4">{book?.desc}</p>
+      <p className="line-clamp-4 text-sm">{book?.desc}</p>
 
       {/* GENRES */}
       <div className="flex gap-2">

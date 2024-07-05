@@ -17,6 +17,7 @@ import { getAllGenres } from "./apis/genre.api";
 import { getAllBooks } from "./apis/book.api";
 import UpdateBook from "./pages/admin/UpdateBook";
 import Book from "./pages/public/Book";
+import AdminRouter from "./components/AdminRouter";
 
 const App = () => {
   useQuery({
@@ -45,13 +46,15 @@ const App = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="book/:id" element={<Book />} />
 
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="books" element={<BookList />} />
-          <Route path="users" element={<UserList />} />
-          <Route path="genres" element={<GenreList />} />
-          <Route path="add-book" element={<AddBook />} />
-          <Route path="books/update/:id" element={<UpdateBook />} />
+        <Route element={<AdminRouter />}>
+          <Route path="dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="books" element={<BookList />} />
+            <Route path="users" element={<UserList />} />
+            <Route path="genres" element={<GenreList />} />
+            <Route path="add-book" element={<AddBook />} />
+            <Route path="books/update/:id" element={<UpdateBook />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

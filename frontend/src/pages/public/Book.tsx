@@ -21,34 +21,38 @@ const Book = () => {
       {isLoading ? (
         <BookSkeleton />
       ) : (
-        <>
-          <section className="flex flex-col gap-4 sm:w-1/3">
-            <div className="">
-              <img
-                src={book?.bookCover}
-                alt="Book Cover"
-                className="mx-auto rounded-md"
-              />
-            </div>
-            <button className="btn btn-neutral flex items-center gap-1">
-              <Heart /> <span>Favourites</span>
-            </button>
-            <button className="btn btn-outline flex items-center gap-1">
-              <ShoppingCart /> <a href={book?.link}>Buy</a>
-            </button>
-          </section>
+        <div className="flex flex-col">
+          {/* BREADCRUMB */}
 
-          <section className="flex flex-col gap-2 flex-1 max-h-[calc(100svh-80px)] overflow-y-auto pr-2">
-            <article className="flex flex-col gap-2">
-              {/* BOOK DETAILS */}
-              <BookDetails book={book} />
-              <div className="divider" />
-              {/* OUTER DETAILS */}
-              <OuterDetails book={book} />
-              <div className="divider" />
-            </article>
-          </section>
-        </>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <section className="flex flex-col gap-4 sm:w-1/3">
+              <div className="">
+                <img
+                  src={book?.bookCover}
+                  alt="Book Cover"
+                  className="mx-auto rounded-md w-3/4"
+                />
+              </div>
+              <button className="btn btn-neutral flex items-center gap-1 w-3/4 mx-auto">
+                <Heart /> <span>Favourites</span>
+              </button>
+              <button className="btn btn-outline flex items-center gap-1 w-3/4 mx-auto">
+                <ShoppingCart /> <a href={book?.link}>Buy</a>
+              </button>
+            </section>
+
+            <section className="flex flex-col gap-2 flex-1 max-h-[calc(100svh-80px)] overflow-y-auto sm:pr-2">
+              <article className="flex flex-col gap-2">
+                {/* BOOK DETAILS */}
+                <BookDetails book={book} />
+                <div className="divider" />
+                {/* OUTER DETAILS */}
+                <OuterDetails book={book} />
+                <div className="divider" />
+              </article>
+            </section>
+          </div>
+        </div>
       )}
     </div>
   );

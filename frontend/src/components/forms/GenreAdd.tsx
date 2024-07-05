@@ -29,7 +29,7 @@ const GenreAdd = () => {
             }`}
             styles={{
               control: () => ({
-                height: "3rem",
+                minHeight: "3rem",
                 display: "flex",
               }),
               menu: () => ({
