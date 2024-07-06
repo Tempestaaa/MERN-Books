@@ -2,15 +2,16 @@ import Input from "../../components/common/Input";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GenreAdd, Gerne } from "../../types/genre.type";
 import { useState } from "react";
-import Genres from "../../components/Genres";
 import { Check, Plus, X } from "lucide-react";
 import { addGenre, updateGenre } from "../../apis/genre.api";
 import { toast } from "react-toastify";
 import Loading from "../../components/common/Loading";
+import Genres from "../../components/genre/Genres";
+import GenreSkeleton from "../../components/genre/GenreSkeleton";
 
 const GenreList = () => {
   const queryClient = useQueryClient();
-  const { data: genres } = useQuery<{ data: Gerne[] }>({
+  const { data: genres, isLoading } = useQuery<{ data: Gerne[] }>({
     queryKey: ["genreList"],
   });
   const genreList = genres?.data;
@@ -62,7 +63,7 @@ const GenreList = () => {
       <div className="flex flex-col md:flex-row gap-2 items-center mt-2">
         <form
           onSubmit={id ? handleUpdateGenre : handleAddGenre}
-          className="flex-1 flex items-end gap-2 w-full"
+          className="flex-1 flex items-end gap-1 w-full"
         >
           <Input
             placeholder="Add Genre..."
@@ -105,9 +106,15 @@ const GenreList = () => {
         </div>
       </div>
 
-      <div className="divider"></div>
+      <div className="divider" />
 
-      <Genres genreList={genreList} setId={setId} setName={setName} />
+      <section className="grid gap-x-4 gap-y-2 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+        {isLoading ? (
+          <GenreSkeleton />
+        ) : (
+          <Genres genreList={genreList} setId={setId} setName={setName} />
+        )}
+      </section>
     </div>
   );
 };

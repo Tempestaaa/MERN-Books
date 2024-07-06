@@ -1,8 +1,8 @@
 import { X } from "lucide-react";
-import { Gerne } from "../types/genre.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteGenre } from "../apis/genre.api";
 import { toast } from "react-toastify";
+import { Gerne } from "../../types/genre.type";
+import { deleteGenre } from "../../apis/genre.api";
 
 type Props = {
   genreList: Gerne[] | undefined;
@@ -27,7 +27,7 @@ const Genres = ({ genreList, setId, setName }: Props) => {
   });
 
   return (
-    <section className="grid gap-x-4 gap-y-2 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+    <>
       {genreList?.map((item) => (
         <div
           key={item._id}
@@ -47,7 +47,7 @@ const Genres = ({ genreList, setId, setName }: Props) => {
           </button>
         </div>
       ))}
-    </section>
+    </>
   );
 };
 

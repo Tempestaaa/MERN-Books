@@ -29,3 +29,12 @@ export type UserRegister = z.infer<typeof UserDataRegister>;
 // USER LOGIN
 export const UserDataLogin = UserData.pick({ username: true, password: true });
 export type UserLogin = z.infer<typeof UserDataLogin>;
+
+// USER BACKEND
+export const UserDataBackEnd = z.object({
+  users: z.array(UserData),
+  page: z.coerce.number(),
+  pages: z.coerce.number(),
+  total: z.coerce.number(),
+});
+export type UserBackEnd = z.infer<typeof UserDataBackEnd>;

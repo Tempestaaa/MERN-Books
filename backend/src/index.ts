@@ -8,6 +8,7 @@ import { v2 as cloudinary } from "cloudinary";
 import authRoutes from "./routes/auth.route";
 import genreRoutes from "./routes/genre.route";
 import bookRoutes from "./routes/book.route";
+import userRoutes from "./routes/user.route";
 
 // CLOUDINARY CONFIG
 cloudinary.config({
@@ -38,6 +39,7 @@ const port = process.env.PORT || 3000;
 app.use("/api/auth", authRoutes);
 app.use("/api/genres", genreRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
