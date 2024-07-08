@@ -8,7 +8,7 @@ export const UserData = z.object({
   fullName: z.string().trim().min(1, { message: "Required" }),
   password: z.string().trim().min(6, { message: "6 Minimum" }),
   image: z.any(),
-  favourites: z.array(BookData),
+  favourites: z.array(z.string()),
   isAdmin: z.coerce.boolean(),
 });
 export type User = z.infer<typeof UserData>;
@@ -38,3 +38,24 @@ export const UserDataBackEnd = z.object({
   total: z.coerce.number(),
 });
 export type UserBackEnd = z.infer<typeof UserDataBackEnd>;
+
+// USER PROFILE UPDATE
+export const UserDataUpdateProfile = UserData.pick({
+  username: true,
+  fullName: true,
+  image: true,
+});
+export type UserUpdateProfile = z.infer<typeof UserDataUpdateProfile>;
+
+// USER PASSWORD UPDATE
+export const UserDataUpdatePassword = z
+  .object({
+    oldPassword: z.string().trim().min(6, { message: "6 Minimum" }),
+    confirm: z.string().trim().min(6, { message: "6 Minimum" }),
+    newPassword: z.string().trim().min(6, { message: "6 Minimum" }),
+  })
+  .refine((data) => data.newPassword === data.confirm, {
+    message: "Password do not match",
+    path: ["confirm"],
+  });
+export type UserUpdatePassword = z.infer<typeof UserDataUpdatePassword>;

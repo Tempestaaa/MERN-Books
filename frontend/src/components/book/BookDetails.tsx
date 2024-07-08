@@ -1,30 +1,11 @@
-import { Star } from "lucide-react";
 import { Book } from "../../types/book.type";
+import StarDisplay from "../StarDisplay";
 
 type Props = {
   book: Book | undefined;
 };
 
 const BookDetails = ({ book }: Props) => {
-  const rating = (rate: number) => {
-    const star = Math.floor(rate) || 5;
-    return (
-      <div className="flex gap-1">
-        {[...Array(star)].map((_, i) => (
-          <Star key={i} size={32} fill="#facc15" className="text-yellow-400" />
-        ))}
-        {[...Array(5 - star)].map((_, i) => (
-          <Star
-            key={i}
-            size={32}
-            fill="#d3cecf"
-            className="text-neutral-content"
-          />
-        ))}
-      </div>
-    );
-  };
-
   return (
     <>
       {/*   ORIGINAL TITLE */}
@@ -38,7 +19,7 @@ const BookDetails = ({ book }: Props) => {
 
       {/* RATING */}
       <div className="flex gap-2 items-center">
-        {rating(Number(book?.rating))}
+        <StarDisplay rate={Number(book?.rating)} />
         <span className="text-lg font-semibold">{book?.rating}</span>
       </div>
 

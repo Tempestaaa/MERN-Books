@@ -126,3 +126,19 @@ export const getBook = expressAsyncHandler(
     res.status(200).json(book);
   }
 );
+
+export const deleteBook = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      res.status(404);
+      throw new Error("Book not found");
+    }
+    await cloudinary.uploader.destroy(
+      book?.bookCover.split("/").pop()?.split(".")[0] as string
+    );
+
+    await book.deleteOne();
+    res.status(200).json({ message: "Book deleted" });
+  }
+);

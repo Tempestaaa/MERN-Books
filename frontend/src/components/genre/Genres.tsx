@@ -38,7 +38,7 @@ const Genres = ({ genreList, setId, setName }: Props) => {
               setId(item._id);
               setName(item.name);
             }}
-            className="flex-1 h-full grid place-items-center truncate"
+            className="flex-1 h-full grid place-items-center truncate font-normal"
           >
             {item.name}
           </span>

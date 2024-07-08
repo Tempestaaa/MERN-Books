@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Book as BookType } from "../../types/book.type";
 import { getBook } from "../../apis/book.api";
@@ -6,8 +6,12 @@ import { Heart, ShoppingCart } from "lucide-react";
 import BookDetails from "../../components/book/BookDetails";
 import OuterDetails from "../../components/book/OuterDetails";
 import BookSkeleton from "../../components/book/BookSkeleton";
+import { toggleFavourites } from "../../apis/user.api";
+import { toast } from "react-toastify";
+import { User } from "../../types/user.type";
 
 const Book = () => {
+  const queryClient = useQueryClient();
   const { id } = useParams();
 
   const { data, isLoading } = useQuery<{ data: BookType }>({
@@ -15,6 +19,22 @@ const Book = () => {
     queryFn: () => getBook(id as string),
   });
   const book = data?.data;
+
+  const { mutateAsync: toggleFavouritesApi, isPending } = useMutation({
+    mutationKey: ["toggleFavourites"],
+    mutationFn: (bookId: string) => toggleFavourites(bookId),
+    onSuccess: async () => {
+      toast.success("Book added to favourites");
+      await queryClient.invalidateQueries({ queryKey: ["favourites"] });
+      await queryClient.invalidateQueries({ queryKey: ["authUser"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const { data: user } = useQuery<User>({ queryKey: ["authUser"] });
+  const isAlreadyInFavourites = user?.favourites.includes(id as string);
 
   return (
     <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-8">
@@ -30,14 +50,30 @@ const Book = () => {
                 <img
                   src={book?.bookCover}
                   alt="Book Cover"
-                  className="mx-auto rounded-md w-3/4"
+                  className="mx-auto rounded-md w-3/4 max-h-[600px]"
                 />
               </div>
-              <button className="btn btn-neutral flex items-center gap-1 w-3/4 mx-auto">
-                <Heart /> <span>Favourites</span>
+              <button
+                disabled={isPending}
+                onClick={async () => await toggleFavouritesApi(id as string)}
+                className="btn btn-neutral flex items-center gap-1 w-3/4 mx-auto"
+              >
+                {isAlreadyInFavourites ? (
+                  <>
+                    <Heart fill="#ef4444" className="text-red-500" />{" "}
+                    <span>Already In Favourites</span>
+                  </>
+                ) : (
+                  <>
+                    <Heart /> <span>Favourites</span>
+                  </>
+                )}
               </button>
               <button className="btn btn-outline flex items-center gap-1 w-3/4 mx-auto">
-                <ShoppingCart /> <a href={book?.link}>Buy</a>
+                <ShoppingCart />{" "}
+                <a href={book?.link} target="_blank" rel="noopener noreferrer">
+                  Buy now
+                </a>
               </button>
             </section>
 
