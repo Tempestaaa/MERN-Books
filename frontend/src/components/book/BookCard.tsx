@@ -27,14 +27,20 @@ const BookCard = ({ item }: Props) => {
 
   return (
     <div className="card shadow-xl image-full">
-      <figure className="">
+      <figure>
         <img src={item.bookCover} alt="Book Cover" />
       </figure>
       <div className="card-body text-xs">
-        <Link to={`/book/${item._id}`} className="line-clamp-2 text-xs">
+        <Link
+          to={`/book/${item._id}`}
+          className="line-clamp-2 text-xs hover:underline"
+        >
           {item.originalTitle}
         </Link>
-        <Link to={`/book/${item._id}`} className="card-title line-clamp-2">
+        <Link
+          to={`/book/${item._id}`}
+          className="card-title line-clamp-2 hover:underline"
+        >
           {item.title}
         </Link>
         <span>{item.author}</span>
